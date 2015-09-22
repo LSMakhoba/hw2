@@ -24,9 +24,8 @@ make_dict(char *word) {
   nd->next = NULL;
   return nd;
 }
-
-pthread_mutex_t wlock;
 pthread_mutex_t mlock;
+pthread_mutex_t wlock;
 dict_t* d;
 FILE *infile;
 
@@ -113,7 +112,7 @@ words() {
 	pthread_t threads[NumThreads];
 	pthread_attr_t attr;
 
-	int i, threadRet;
+	int threadRet, j;
 
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
@@ -121,14 +120,14 @@ words() {
 	pthread_mutex_init(&mlock,NULL);
 	pthread_mutex_init(&wlock,NULL);
 
-	for(i=0;i<NumThreads;i++){
-	threadRet = pthread_create(&threads[i],&attr,mythread,NULL);
+	for(j=0;j<NumThreads;j++){
+	threadRet = pthread_create(&threads[j],&attr,mythread,NULL);
 		if(threadRet){
 		exit(-1);
 		}
 	}
-	for(i=0;i<NumThreads;i++){
-	pthread_join(threads[i],NULL);
+	for( j=0;j<NumThreads;j++){
+	pthread_join(threads[j],NULL);
 	}
 pthread_mutex_destroy(&wlock);
 pthread_mutex_destroy(&mlock);
