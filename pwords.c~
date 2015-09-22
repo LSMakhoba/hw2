@@ -90,7 +90,7 @@ typedef struct aThread {
 } aThread_t;
 */
 void* 
-mythread(void* arg){
+mythread(void){
 
 	char wordbuf[MAXWORD];
 	int flag=1;
